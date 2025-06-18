@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class FormulirController extends Controller
 {
@@ -19,7 +20,7 @@ class FormulirController extends Controller
         return view('user.formulir.index', [
             'title' => 'Formulir Peminjaman',
             'menuFormulirPeminjaman' => 'active',
-            'rooms' => $rooms['data_users'],
+            'rooms' => $rooms['data_rooms'],
             'users' => $users['data_users']
         ]);
     }
@@ -55,8 +56,18 @@ class FormulirController extends Controller
     // Kirim data ke backend CI
     $response = Http::post('http://localhost:8080/bookings', $postData);
 
-    if ($response->successful()) {
-        return redirect()->back()->with('success', 'Peminjaman berhasil diajukan!');
+   if ($response->successful()) {
+        // Cek role dari session
+        $role = Session::get('role');
+
+        if ($role === 'user') {
+            return redirect()->route('riwayat')->with('success', 'Peminjaman berhasil diajukan!');
+        } elseif ($role === 'admin') {
+            return redirect()->route('pinjam.index')->with('success', 'Peminjaman berhasil diajukan!');
+        } else {
+            // Role tidak diketahui
+            return redirect()->back()->with('success', 'Peminjaman berhasil diajukan!');
+        }
     } else {
         return redirect()->back()->with('error', 'Gagal mengirim data ke server.');
     }

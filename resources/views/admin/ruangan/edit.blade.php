@@ -20,7 +20,7 @@
             </div>
             <div class="mb-3">
                 <label for="capacity" class="form-label">Kapasitas</label>
-                <input type="number" name="capacity" class="form-control" value="{{ old('capacity', $room['capacity']) }}" required>
+                <input type="number" name="capacity" class="form-control" pattern="[0-9]*" min=1 value="{{ old('capacity', $room['capacity']) }}" required>
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
@@ -29,9 +29,9 @@
                     <option value="unavailable" {{ $room['status'] == 'unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
                 </select>
             </div>
-            
+
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            <a href="{{ route('ruangan') }}" class="btn btn-secondary">Batal</a>
+            <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>

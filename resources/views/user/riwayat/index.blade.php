@@ -3,31 +3,13 @@
 
 <!-- page Heading -->
 <h1 class="h3 mb-4 text-gray-800">
-   <i class="fas fa-tasks mr-2"></i>
-   {{$title}}
+    <i class="fas fa-tasks mr-2"></i>
+    {{$title}}
 </h1>
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <!-- Tombol Tambah di kiri -->
-        <a href="" class="btn btn-sm btn-primary">
-            <i class="fas fa-plus mr-2"></i>    
-            Tambah Data
-        </a>
-
-        <!-- Tombol Export di kanan -->
-        <div>
-            <a href="" class="btn btn-sm btn-success">
-                <i class="fas fa-file-excel mr-2"></i>    
-                File Excel
-            </a>
-            <a href="" class="btn btn-sm btn-danger">
-                <i class="fas fa-file-pdf mr-2"></i>    
-                File PDF
-            </a>
-        </div>
     </div>
-
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -44,18 +26,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($riwayat as $item)
                     <tr class="text-center">
-                        <td>Tiger Nixon</td>
-                        <td>Auditorium</td>
-                        <td>2025/04/25</td>
-                        <td>2025/04/28</td>
-                        <td>13.00</td>
-                        <td>16.00</td>
-                        <td>Digunakan Untuk JKB Fest</td>
-                        <td>
-                            <span class="badge badge-success badge-pill">Available</span>
+                        <td>{{$item['name']}}</td>
+                        <td>{{$item['room_name']}}</td>
+                        <td>{{$item['start_date']}}</td>
+                        <td>{{$item['end_date']}}</td>
+                        <td>{{$item['start_time']}}</td>
+                        <td>{{$item['end_time']}}</td>
+                        <td>{{$item['description']}}</td>
+                        <td class="text-center">
+                            @if($item['status'] == 'Pending')
+                            <span class="badge bg-warning text-white">
+                                {{ strtoupper($item['status']) }}
+                            </span>
+                            @elseif($item['status'] == 'Accepted')
+                            <span class="badge bg-success text-white">
+                                {{ strtoupper($item['status']) }}
+                            </span>
+                             @else($item['status'] == 'Declined')
+                            <span class="badge bg-danger text-white">
+                                {{ strtoupper($item['status']) }}
+                            </span>
+                            @endif
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

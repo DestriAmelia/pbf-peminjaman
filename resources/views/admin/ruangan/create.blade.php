@@ -15,7 +15,7 @@
     </div>
     <div class="mb-3">
         <label for="capacity" class="form-label">Kapasitas</label>
-        <input type="number" name="capacity" id="capacity" class="form-control" required>
+        <input type="number" name="capacity" id="capacity" class="form-control" pattern="[0-9]*" min=1 required>
     </div>
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
@@ -25,6 +25,6 @@
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="{{ route('ruangan') }}" class="btn btn-secondary">Batal</a>
+    <a href="{{ route('ruangan.index') }}" class="btn btn-secondary">Batal</a>
 </form>
 @endsection

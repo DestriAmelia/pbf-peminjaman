@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 @section('content')
@@ -9,30 +7,28 @@
     </div>
     <div class="card-body">
         @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
 
-@if (session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+        @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
 
         <form action="{{ route('formulir.isi') }}" method="POST">
             @csrf
-
             <div class="mb-3">
-                <label for="user_id" class="form-label">Nama Peminjam</label>
-                <select name="user_id" id="user_id" class="form-control" required>
-                    <option disabled selected>Pilih User</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user['id_user'] }}">{{ $user['name'] }}</option>
-                    @endforeach
-                </select>
+                <label class="form-label">Nama Peminjam</label>
+                <!-- Menampilkan nama user yang login -->
+                <input type="text" class="form-control" value="{{ Session::get('name') }}" readonly>
+
+                <!-- Mengirim ID user ke backend saat form disubmit -->
+                <input type="hidden" name="user_id" value="{{ Session::get('id_user') }}">
             </div>
 
 
@@ -77,4 +73,3 @@
     </div>
 </div>
 @endsection
-
